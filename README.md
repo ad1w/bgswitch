@@ -5,19 +5,20 @@ bgswitch is a lightweight tool for periodically changing your desktop background
 <h2>:link: Requirements</h2>
 
 1. ```bash```
-2. ```feh``` [only if you running window mangaer like dwm, i3, etc.]
+2. ```feh``` [only if you running window mangaer like dwm, i3, etc]
 
 ## Installation
 ```
 ~ $ git clone https://github.com/ad1w/bgswitch
 ~ $ cd bgswitch
 ~ $ bash install.sh
-```
-then add your image files into ```~/.config/bgswitch/backgrounds``` directory
-```
+
 # to uninstall, run this command
 ~ $ bash install.sh -R
 ```
+
+then add your image files into ```~/.config/bgswitch/backgrounds```
+
 
 ## Usage
 in major desktop env. like plasma, gnome or xfce, you only need relog from your session
