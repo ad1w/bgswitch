@@ -61,7 +61,7 @@ elif [ $ds = xfce ]; then
 		done
 	done
 
-# dwm
+# wm-x11
 elif [[ $wm =~ $ds ]]; then
 	while true; do
 		for image in $bgfiles; do
