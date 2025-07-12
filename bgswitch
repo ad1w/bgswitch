@@ -1,0 +1,75 @@
+#!/bin/bash
+
+config_file="/home/$USER/.config/bgswitch/config"
+
+function check_conf() {
+	if [ ! -f "$config_file" ]; then
+		echo "creating the config file..."
+		mkdir -p ~/.config/bgswitch
+		mkdir ~/.config/bgswitch/backgrounds
+		touch $config_file
+		echo 'TIME=60'>> $config_file
+	else
+		:
+	fi
+}
+
+check_conf
+source $config_file
+
+bgdir="/home/$USER/.config/bgswitch/backgrounds"
+# use this if on bgdir only include image file
+bgfiles=$(find $bgdir -type f)
+# use this if on bgdir include not only image file (more powerfull)
+#bgfiles=$(find $bgdir -name '*' -exec file {} \; | grep -o -P '^.+image.+$' | cut -d ':' -f 1)
+
+# indentify the active desktop
+ds=$(echo $DESKTOP_SESSION)
+# window manager list
+wm="awesome bspwm dwm i3 openbox twm"
+
+# plasma
+if [ $ds = plasma ] || [ $ds = plasmawayland ]; then
+	while true; do
+		for image in $bgfiles; do
+			$(plasma-apply-wallpaperimage $image)
+			sleep $TIME
+		done
+	done
+
+# gnome
+elif [ $ds = gnome ] || [ $ds = gnome-xorg ] || \
+	[ $ds = gnome-classic ] || [ $ds = gnome-classic-xorg ]; then
+	while true; do
+		for image in $bgfiles; do
+			$(gsettings set org.gnome.desktop.background picture-uri file://$image)
+			$(gsettings set org.gnome.desktop.background picture-uri-dark file://$image)
+			sleep $TIME 
+		done
+	done
+
+# xfce
+elif [ $ds = xfce ]; then
+	# show the monitor that use
+	mtr=$(xrandr | grep -E 'monitor|LVDS' | awk '{print $1}')
+	# show the specific xfce desktop info will be use
+	cmd=$(xfconf-query -c xfce4-desktop -p /backdrop -l | grep $mtr | grep 'workspace0.*last-image')
+	while true; do
+		for image in $bgfiles; do
+			$(xfconf-query -c xfce4-desktop -p $cmd -s $image)
+			sleep $TIME
+		done
+	done
+
+# dwm
+elif [[ $wm =~ $ds ]]; then
+	while true; do
+		for image in $bgfiles; do
+			$(feh --bg-fill $image)
+			sleep $TIME
+		done
+	done
+
+else
+	:
+fi
