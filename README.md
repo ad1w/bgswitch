@@ -30,10 +30,14 @@ bgswitch &
 
 ## Configuration
 ```
-nano ~/.config/bgswitch/config
+~ $ nano ~/.config/bgswitch/config
 ```
 ```
 TIME=60 # in second
+```
+<b>highly recommend</b> restart bgswitch before relog from your session to avoid any error
+```
+~ $ pkill bgswitch
 ```
 
 <h2>:white_check_mark: Tested</h2>
