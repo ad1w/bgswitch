@@ -9,8 +9,6 @@ function check_conf() {
 		mkdir ~/.config/bgswitch/backgrounds
 		touch $config_file
 		echo 'TIME=60'>> $config_file
-	else
-		:
 	fi
 }
 
@@ -69,7 +67,4 @@ elif [[ $wm =~ $ds ]]; then
 			sleep $TIME
 		done
 	done
-
-else
-	:
 fi
